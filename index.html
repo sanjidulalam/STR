@@ -1,133 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form with Bootstrap</title>
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATM RESEARCH PORTAL</title>
+    <!-- 
+    GOOGLE SHEET HEADERS LIST (Put these in the first row of your sheet):
+    Timestamp, Age, Gender, Academic_Level, Field_of_Study, SM_Experience, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28, Q29, Q30, Detox_Freq, SM_Relationship, Recommendations, Consent
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-      .form-container {
-        max-width: 500px;
-        margin: auto;
-        margin-top: 50px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-      }
+        :root {
+            --brand-blue: #3b82f6;
+            --brand-bg: #020617;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--brand-bg);
+            color: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .heading-font {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        .glow-accent {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .progress-spring {
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        .animate-pulse-ring {
+            animation: pulse-ring 4s infinite ease-in-out;
+        }
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-card:hover {
+            border-color: var(--brand-blue);
+            transform: translateY(-4px);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-  </head>
-  <body class="bg-light">
-    <div class="container">
-      <div class="form-container">
-        <h4 class="text-center mb-4">Form Submission to Google Sheet</h4>
-        <form id="submit-to-google-sheet">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input
-              class="form-control"
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              class="form-control"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="slip">Contact Number:</label>
-            <input
-              class="form-control"
-              type="text"
-              name="contact_number"
-              id="contact_number"
-              placeholder="Contact Number"
-              required
-            />
-          </div>
+</head>
+<body class="no-scrollbar">
+    <div id="root"></div>
 
-          <div class="form-group">
-            <label for="loc">Gender:</label>
-            <select class="form-control" name="gender" id="gender" required>
-              <option value="" disabled selected hidden>Choose...</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="loc">Message:</label>
-            <textarea
-              class="form-control"
-              name="message"
-              id="message"
-              placeholder="Message"
-              required
-            ></textarea>
-          <div class="form-group form-check mt-2">
-            <input class="form-check-input" type="checkbox" id="age" />
-            <label class="form-check-label" for="age"
-              >Check if you are over 18 years old</label
-            >
-          </div>
-          <div class="form-group form-check">
-            <input class="form-check-input" type="checkbox" id="ex" required />
-            <label class="form-check-label" for="ex"
-              >By checking this box I certify that I am agree with the data
-              terms and policies.
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+    <script type="module">
+        import React, { useState, useRef, useMemo } from 'https://esm.sh/react@19.2.4';
+        import ReactDOM from 'https://esm.sh/react-dom@19.2.4/client';
+        import htm from 'https://esm.sh/htm';
+        import * as Lucide from 'https://esm.sh/lucide-react@0.463.0';
 
-    <script>
-      const scriptURL =                       
-      "https://script.google.com/macros/s/AKfycbyUJouFz0yrhxwyZn6goVWsS0zMwwxe8h61mbrHueM-Hw_a8oBZtlVAzX-0iAeTXpNz/exec";
-      const form = document.forms["submit-to-google-sheet"];
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        var formData = new FormData(form);
-        var ex = document.getElementById("ex").checked;
-        var age = document.getElementById("age").checked;
+        const html = htm.bind(React.createElement);
 
-        if (age) {
-          formData.append("age", "Yes");
-        } else {
-          formData.append("age", "No");
-        }
-        if (ex) {
-          formData.append("ex", "Yes");
-        } else {
-          formData.append("ex", "No");
-        }
+        // --- GOOGLE APPS SCRIPT URL ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUJouFz0yrhxwyZn6goVWsS0zMwwxe8h61mbrHueM-Hw_a8oBZtlVAzX-0iAeTXpNz/exec";
 
-        fetch(scriptURL, { method: "POST", body: formData })
-          .then((response) => {
-            swal("Done", "Submitted Successfully.", "success");
-          })
-          .catch((error) => {
-            swal("Error", "Something went wrong. please try again!", "error");
-          });
-      });
+        const LIKERT_QUESTIONS = [
+            "I have a clear understanding of who I truly am beyond social media personas",
+            "I feel authentic and genuine in my daily interactions with others",
+            "My online persona accurately reflects my true values and beliefs",
+            "I am aware of my core strengths and weaknesses",
+            "I feel disconnected from my true self when using social media",
+            "I make decisions based on my personal values rather than external pressure",
+            "I struggle to identify my genuine interests versus what I think I should like",
+            "I feel confident expressing my authentic opinions, even if they are unpopular",
+            "I understand what truly motivates me in my personal and academic life",
+            "I feel pressure to maintain a curated image on social media",
+            "I spend significant time curating my social media content",
+            "I experience anxiety when my posts don't receive expected engagement",
+            "I compare my life to others' social media presentations",
+            "Social media use interferes with my focus on academic tasks",
+            "I feel FOMO (Fear of Missing Out) when not checking social media",
+            "I modify my behavior based on what I think will get likes or comments",
+            "I feel more confident when receiving social validation online",
+            "I use social media to escape from uncomfortable emotions",
+            "My daily mood is affected by my social media interactions",
+            "I have experienced stress due to cyberbullying or negative comments",
+            "I am motivated by the desire to learn and grow personally",
+            "I pursue my academic goals because they align with my values",
+            "I would continue my studies even without grades or external rewards",
+            "I feel a sense of purpose in my current pursuits",
+            "I am driven by internal satisfaction rather than external recognition",
+            "I find my academic work meaningful and worthwhile",
+            "I set my own goals rather than following what others expect",
+            "I feel intrinsically motivated to achieve excellence",
+            "My motivation comes from personal interest, not external pressure",
+            "I feel energized when working on tasks aligned with my authentic interests"
+        ];
+
+        const App = () => {
+            const [step, setStep] = useState(0);
+            const [responses, setResponses] = useState({});
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [isSuccess, setIsSuccess] = useState(false);
+            const [isError, setIsError] = useState(false);
+            const [consent, setConsent] = useState(false);
+
+            // Flow configuration with descriptive IDs for Google Sheet Headers
+            const surveyFlow = useMemo(() => [
+                { type: 'landing', title: 'SATM PORTAL' },
+                { id: 'Age', type: 'choice', title: 'Current Age Range', options: ['18-20', '21-23', '24-26', '27-30', 'Above 30'] },
+                { id: 'Gender', type: 'choice', title: 'Gender Identity', options: ['Male', 'Female', 'Non-binary', 'Prefer not to say'] },
+                { id: 'Academic_Level', type: 'choice', title: 'Academic Level', options: ['Undergraduate', 'Postgraduate', 'Doctoral'] },
+                { id: 'Field_of_Study', type: 'choice', title: 'Field of Study', options: ['Management', 'Engineering', 'Sciences', 'Arts & Humanities'] },
+                { id: 'SM_Experience', type: 'choice', title: 'Years of SM Experience', options: ['< 2 years', '2-5 years', '5-10 years', '> 10 years'] },
+                ...LIKERT_QUESTIONS.map((q, i) => ({ id: `Q${i + 1}`, type: 'likert', title: q })),
+                { id: 'Detox_Freq', type: 'choice', title: 'Digital Break Frequency', options: ['Daily', 'Regularly', 'Weekly', 'Rarely', 'Never'] },
+                { id: 'SM_Relationship', type: 'text', title: 'SM & Authentic Self Relationship' },
+                { id: 'Recommendations', type: 'text', title: 'Final Recommendations' },
+                { type: 'submit_vault', title: 'SECURE TRANSMISSION' }
+            ], []);
+
+            const current = surveyFlow[step];
+            const progress = (step / (surveyFlow.length - 1)) * 100;
+
+            const updateResponse = (val) => {
+                setResponses(prev => ({ ...prev, [current.id]: val }));
+                if (current.type === 'likert' || (current.type === 'choice' && current.options.length < 6)) {
+                    setTimeout(() => setStep(s => Math.min(s + 1, surveyFlow.length - 1)), 400);
+                }
+            };
+
+            const triggerFinalSubmit = async () => {
+                if (isSubmitting) return;
+                setIsSubmitting(true);
+                setIsError(false);
+                
+                const formData = new FormData();
+                // Map responses to FormData keys (will match sheet headers)
+                Object.keys(responses).forEach(key => {
+                    formData.append(key, responses[key]);
+                });
+                // Explicit attributes for easier understanding
+                formData.append("Consent", "Yes");
+                // Timestamp is handled by Google Apps Script but we can send it too
+                formData.append("Timestamp", new Date().toLocaleString());
+
+                try {
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    if (result.result === 'success') {
+                        setIsSuccess(true);
+                    } else {
+                        setIsError(true);
+                    }
+                } catch (err) {
+                    console.error("Submission Error:", err);
+                    setIsError(true);
+                } finally {
+                    setIsSubmitting(false);
+                }
+            };
+
+            const renderStep = () => {
+                if (isSuccess) return html`
+                    <div className="text-center py-20 animate-in fade-in zoom-in duration-700">
+                        <div className="w-48 h-48 bg-blue-600 rounded-full mx-auto flex items-center justify-center shadow-[0_0_80px_rgba(37,99,235,0.4)] mb-12">
+                            <${Lucide.Check} size=${100} className="text-white" strokeWidth=${5} />
+                        </div>
+                        <h2 className="heading-font text-7xl uppercase italic tracking-tighter glow-accent mb-6">SYNC SUCCESS</h2>
+                        <p className="text-slate-400 text-2xl font-bold uppercase tracking-widest mb-16">DATA SUCCESSFULLY VAULTED</p>
+                        <button onClick=${() => window.location.reload()} className="px-16 py-7 bg-slate-900 border-2 border-slate-700 rounded-2xl font-black uppercase text-xl hover:bg-slate-800 transition-all active:scale-95 shadow-2xl">NEW SESSION</button>
+                    </div>
+                `;
+
+                if (current.type === 'landing') return html`
+                    <div className="text-center space-y-16 animate-in fade-in duration-1000">
+                        <div className="space-y-4">
+                            <h1 className="heading-font text-8xl md:text-[11rem] uppercase italic tracking-tighter leading-none glow-accent">SATM <span className="text-blue-500">HUB</span></h1>
+                            <p className="text-2xl md:text-5xl font-bold text-slate-500 uppercase tracking-[0.3em]">SELF-AUTHENTICATION RESEARCH</p>
+                        </div>
+                        <div className="max-w-xl mx-auto space-y-10">
+                            <label className="flex items-center gap-8 p-10 glass rounded-[3rem] border-2 border-slate-800 hover:border-blue-500 transition-all cursor-pointer group shadow-2xl">
+                                <input type="checkbox" className="w-12 h-12 accent-blue-600 rounded-xl" checked=${consent} onChange=${e => setConsent(e.target.checked)} />
+                                <div className="text-left">
+                                    <p className="font-black uppercase text-2xl group-hover:text-blue-400">GRANT CONSENT</p>
+                                    <p className="text-sm text-slate-500 uppercase font-bold tracking-widest">ANONYMOUS RESEARCH ACCESS</p>
+                                </div>
+                            </label>
+                            <button disabled=${!consent} onClick=${() => setStep(1)} className="w-full py-12 bg-blue-600 text-white rounded-[3.5rem] font-black text-4xl uppercase italic shadow-[0_25px_70px_rgba(37,99,235,0.4)] disabled:opacity-5 transition-all hover:scale-[1.05] active:scale-95 flex items-center justify-center gap-6">INITIALIZE SYNC <${Lucide.Zap} size=${40} /></button>
+                        </div>
+                    </div>
+                `;
+
+                if (current.type === 'submit_vault') return html`
+                    <div className="text-center space-y-20 py-10">
+                        <div className="relative w-64 h-64 mx-auto flex items-center justify-center">
+                            <div className="absolute inset-0 bg-blue-600 rounded-full blur-[100px] opacity-40 animate-pulse-ring"></div>
+                            <div className="relative w-full h-full glass rounded-full flex items-center justify-center border-4 border-blue-500 shadow-inner">
+                                <${isSubmitting ? Lucide.Loader2 : (isError ? Lucide.AlertTriangle : Lucide.ShieldCheck)} size=${120} className=${` ${isSubmitting ? 'animate-spin text-blue-400' : (isError ? 'text-red-500' : 'text-blue-500')}`} />
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <h2 className="heading-font text-7xl md:text-9xl uppercase italic tracking-tighter">
+                                ${isSubmitting ? 'SYNCING...' : (isError ? 'RETRY SYNC' : 'FINAL SYNC')}
+                            </h2>
+                            <p className=${`text-2xl font-black uppercase tracking-[0.5em] ${isError ? 'text-red-500' : 'text-slate-400'}`}>
+                                ${isError ? 'CONNECTION ERROR - TRY AGAIN' : 'SECURE CHANNEL READY'}
+                            </p>
+                        </div>
+                        <button onClick=${triggerFinalSubmit} disabled=${isSubmitting} className="w-full max-w-2xl py-12 bg-blue-600 text-white rounded-[4rem] font-black text-5xl uppercase italic shadow-[0_0_80px_rgba(37,99,235,0.6)] transition-all hover:scale-[1.03] active:scale-95">TRANSMIT DATA</button>
+                    </div>
+                `;
+
+                return html`
+                    <div className="space-y-16 animate-in slide-in-from-right-16 duration-700">
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-4 text-blue-500 font-black uppercase tracking-[0.4em] text-lg">
+                                <span className="px-4 py-2 bg-blue-600/10 border border-blue-500/30 rounded-xl">HUB_SYNC 0${step}</span>
+                                <span className="opacity-40">/ DATA_HUB</span>
+                            </div>
+                            <h2 className="heading-font text-5xl md:text-8xl uppercase italic tracking-tighter leading-none glow-accent">${current.title}</h2>
+                        </div>
+                        
+                        <div className="min-h-[300px] flex flex-col justify-center">
+                            ${current.type === 'choice' && html`
+                                <div className="grid grid-cols-1 gap-6">
+                                    ${current.options.map(opt => html`
+                                        <button key=${opt} onClick=${() => updateResponse(opt)} className=${`option-card p-10 rounded-[2.5rem] border-4 text-left flex justify-between items-center ${responses[current.id] === opt ? 'bg-blue-600 border-blue-400 text-white shadow-2xl' : 'bg-slate-900/40 border-slate-800 text-slate-600'}`}>
+                                            <span className="text-3xl font-black uppercase italic">${opt}</span>
+                                            ${responses[current.id] === opt && html`<${Lucide.Check} size=${40} strokeWidth=${5} />`}
+                                        </button>
+                                    `)}
+                                </div>
+                            `}
+
+                            ${current.type === 'likert' && html`
+                                <div className="flex gap-4 md:gap-8 justify-between">
+                                    ${['1', '2', '3', '4', '5'].map(val => html`
+                                        <button key=${val} onClick=${() => updateResponse(val)} className=${`option-card flex-1 h-36 md:h-64 rounded-[3.5rem] border-4 flex items-center justify-center font-black italic text-5xl md:text-9xl ${responses[current.id] === val ? 'bg-blue-600 border-blue-400 text-white shadow-[0_0_60px_rgba(59,130,246,0.5)] scale-110 z-10' : 'bg-slate-900/40 border-slate-800 text-slate-800 hover:text-white'}`}>
+                                            ${val}
+                                        </button>
+                                    `)}
+                                </div>
+                            `}
+
+                            ${current.type === 'text' && html`
+                                <textarea autoFocus className="w-full h-80 p-12 glass rounded-[4rem] text-4xl font-bold uppercase placeholder:text-slate-900 outline-none focus:border-blue-500 transition-all border-4 border-slate-900 shadow-inner" placeholder="INPUT DATA LOG..." value=${responses[current.id] || ''} onChange=${e => updateResponse(e.target.value)} />
+                            `}
+                        </div>
+
+                        <div className="flex justify-between gap-10 pt-10">
+                            <button onClick=${() => setStep(s => Math.max(0, s - 1))} className="flex-1 py-8 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] font-black uppercase text-2xl text-slate-600 hover:text-white transition-all flex items-center justify-center gap-6"><${Lucide.ChevronLeft} size=${36} /> BACK</button>
+                            <button onClick=${() => setStep(s => Math.min(surveyFlow.length - 1, s + 1))} className="flex-[2] py-8 bg-blue-600 text-white rounded-[2.5rem] font-black uppercase text-3xl italic shadow-2xl transition-all hover:bg-blue-500 flex items-center justify-center gap-6">CONTINUE <${Lucide.ChevronRight} size=${36} /></button>
+                        </div>
+                    </div>
+                `;
+            };
+
+            return html`
+                <div className="min-h-screen flex flex-col items-center py-20 px-8 max-w-6xl mx-auto relative select-none">
+                    <div className="fixed top-[-10%] left-[-5%] w-3/4 h-3/4 bg-blue-900/10 blur-[150px] rounded-full -z-10 pointer-events-none"></div>
+                    <div className="fixed bottom-[-10%] right-[-5%] w-3/4 h-3/4 bg-indigo-900/10 blur-[150px] rounded-full -z-10 pointer-events-none"></div>
+
+                    ${!isSuccess && html`
+                        <div className="w-full mb-16 flex justify-between items-end animate-in fade-in duration-1000">
+                            <div className="flex items-center gap-8">
+                                <div className="w-20 h-20 glass border-2 border-blue-500 rounded-3xl flex items-center justify-center text-blue-500 shadow-lg"><${Lucide.RadioTower} size=${40} /></div>
+                                <div className="flex flex-col"><span className="font-black uppercase tracking-[0.4em] text-2xl text-white italic">PORTAL_SYNC</span><span className="text-xs font-bold uppercase text-slate-600 tracking-[0.3em]">SECURE RESEARCH HUB V5.0</span></div>
+                            </div>
+                            <div className="heading-font text-8xl text-white italic drop-shadow-2xl">0${step} <span className="text-slate-800 mx-2">/</span> <span className="text-slate-700 text-2xl font-bold not-italic">${surveyFlow.length - 1}</span></div>
+                        </div>
+                        
+                        <div className="w-full h-5 bg-slate-900/60 rounded-full mb-24 p-1.5 overflow-hidden border-2 border-slate-800/40 shadow-inner">
+                            <div className="h-full bg-blue-600 rounded-full progress-spring shadow-[0_0_40px_rgba(37,99,235,0.6)]" style=${{ width: `${progress}%` }}></div>
+                        </div>
+                    `}
+
+                    <main className=${`w-full ${isSuccess ? '' : 'glass'} rounded-[4.5rem] p-12 md:p-28 min-h-[700px] flex flex-col justify-center relative transition-all duration-1000 shadow-2xl`}>
+                        ${renderStep()}
+                    </main>
+
+                    <footer className="mt-40 text-center opacity-30 group hover:opacity-100 transition-opacity duration-1000">
+                        <p className="heading-font uppercase tracking-[3em] text-5xl md:text-8xl mb-8 text-white italic drop-shadow-2xl">@SATM-HUB</p>
+                        <p className="text-base font-bold uppercase tracking-[1em] text-slate-500">DISTRIBUTED DATA VAULT PROTOCOL • 2024-2025</p>
+                    </footer>
+                </div>
+            `;
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(html`<${App} />`);
     </script>
-  </body>
+</body>
 </html>
